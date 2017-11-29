@@ -61,17 +61,15 @@ public class ShutterView extends View {
 
     private static final int MAX_SHADOW_RADIUS = 10;
 
-
     private RectF mViewRangeRectF;//代表整个View区域的矩形
 
-    private Paint mPaint;//画笔
+    private Paint mPaint;
     private Paint mAnimPaint;
     private Path mCirclePath;
     private float[] mLoadingPoint;
     private float mPointWidth;
 
     private boolean mIsAlignment = true;//标识手机是否已经对其
-
 
     public static final int STATUS_NONE = 0;
     public static final int STATUS_ALIGNMENT = 1;
@@ -82,16 +80,12 @@ public class ShutterView extends View {
 
     private int mCurrentStatus = STATUS_NONE;
 
-
-    private
     @ColorInt
-    int mCircleColor;//整体背景色
-    private
+    private int mCircleColor;//整体背景色
     @ColorInt
-    int mCoordinateColor;//对准线颜色
-    private
+    private int mCoordinateColor;//对准线颜色
     @ColorInt
-    int mMoveLayerColor;//移动图层颜色
+    private int mMoveLayerColor;//移动图层颜色
 
     private ValueAnimator mAnimator;
     private float mAnimValue;
@@ -118,6 +112,7 @@ public class ShutterView extends View {
             invalidate();
         }
     };
+
     private PathMeasure mPathMeasure;
     private ValueAnimator mLoadingAnimator;
 
@@ -143,14 +138,9 @@ public class ShutterView extends View {
         mQuasiArcRect = new RectF();
         mCoordinatePath = new Path();
 
-
         mClearXFerMode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
         mMaskXFerMode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
 
-
-        /*
-         Color ...
-         */
         mMoveLayerColor = ContextCompat.getColor(getContext(), R.color.transparent_dark_white);
         mCoordinateColor = mCircleColor = Color.WHITE;
 
@@ -167,7 +157,6 @@ public class ShutterView extends View {
         mPointWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics());
     }
 
-
     @Override
     @SuppressWarnings("all")
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -178,9 +167,7 @@ public class ShutterView extends View {
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
         } else {
-
             width = mBitmapSize;
-
             if (widthMode == MeasureSpec.AT_MOST) {
                 width = Math.min(width, widthSize);
             }
@@ -229,19 +216,15 @@ public class ShutterView extends View {
     // StateChange
     ///////////////////////////////////////////////////////////////////////////
     private void onAwaysNotAlignment() {
-        if (mCurrentStatus == STATUS_LOADING
-                || mCurrentStatus == STATUS_ANIM_TO_NOT_ALIGN) {
+        if (mCurrentStatus == STATUS_LOADING || mCurrentStatus == STATUS_ANIM_TO_NOT_ALIGN) {
             return;
         }
-        if (mCurrentStatus == STATUS_ANIM_TO_ALIGN
-                || mCurrentStatus == STATUS_ALIGNMENT) {
+        if (mCurrentStatus == STATUS_ANIM_TO_ALIGN || mCurrentStatus == STATUS_ALIGNMENT) {
             onToNotAlignment();
             return;
         }
-
         mCurrentStatus = STATUS_NOT_ALIGNMENT;
         postInvalidate();
-
     }
 
     private void onToAlignment() {
@@ -257,14 +240,12 @@ public class ShutterView extends View {
         if (mCurrentStatus == STATUS_ANIM_TO_ALIGN) {
             return;
         }
-        if (mCurrentStatus == STATUS_ANIM_TO_NOT_ALIGN
-                || mCurrentStatus == STATUS_NOT_ALIGNMENT) {
+        if (mCurrentStatus == STATUS_ANIM_TO_NOT_ALIGN || mCurrentStatus == STATUS_NOT_ALIGNMENT) {
             cancelAnim();
             mCurrentStatus = STATUS_ANIM_TO_ALIGN;
             startAnimToAlignmentView();
         }
     }
-
 
     private void onToNotAlignment() {
         if (mCurrentStatus == STATUS_NONE) {
@@ -281,26 +262,20 @@ public class ShutterView extends View {
             return;
         }
 
-        if (mCurrentStatus == STATUS_ANIM_TO_ALIGN
-                || mCurrentStatus == STATUS_ALIGNMENT) {
+        if (mCurrentStatus == STATUS_ANIM_TO_ALIGN || mCurrentStatus == STATUS_ALIGNMENT) {
             cancelAnim();
             mCurrentStatus = STATUS_ANIM_TO_NOT_ALIGN;
             startAnimToNotAlignmentView();
         }
-
     }
 
 
     private void onAwaysAlignment() {
-
-
-        if (mCurrentStatus == STATUS_LOADING
-                || mCurrentStatus == STATUS_ANIM_TO_ALIGN) {
+        if (mCurrentStatus == STATUS_LOADING || mCurrentStatus == STATUS_ANIM_TO_ALIGN) {
             return;
         }
 
-        if (mCurrentStatus == STATUS_ANIM_TO_NOT_ALIGN
-                || mCurrentStatus == STATUS_NOT_ALIGNMENT) {
+        if (mCurrentStatus == STATUS_ANIM_TO_NOT_ALIGN || mCurrentStatus == STATUS_NOT_ALIGNMENT) {
             onToAlignment();
             return;
         }
@@ -308,10 +283,8 @@ public class ShutterView extends View {
         if (mCurrentStatus != STATUS_ALIGNMENT) {
             mCurrentStatus = STATUS_ALIGNMENT;
             invalidate();
-
         }
     }
-
 
     private void startAnimToNotAlignmentView() {
         cancelAnim();
@@ -321,7 +294,6 @@ public class ShutterView extends View {
         mAnimator.addListener(mToNotAlignmentListener);
         mAnimator.start();
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -345,11 +317,9 @@ public class ShutterView extends View {
         }
         makeToCircleShape();//变成圆形
         canvas.drawBitmap(mDrawingBitmap, 0, 0, null);
-
     }
 
     private void drawAlignAnim() {
-
         if (mAnimValue < 0.5F) {
             drawNotAlignmentStatus();
         } else {
@@ -363,11 +333,9 @@ public class ShutterView extends View {
         mAnimPaint.setStrokeWidth(stroke);
         mCanvas.drawCircle(0, 0, radius * (1 - mAnimValue), mAnimPaint);
         mCanvas.restore();
-
     }
 
     private void drawNotAlignAnim() {
-
         if (mAnimValue < 0.5F) {
             drawNotAlignmentStatus();
         } else {
@@ -379,20 +347,15 @@ public class ShutterView extends View {
         float radius = mInnerSize * 1.0F / 2;
         float stroke = mInnerSize * mAnimValue;
         mAnimPaint.setStrokeWidth(stroke);
-
         mCanvas.drawCircle(0, 0, radius * (1 - mAnimValue), mAnimPaint);
         mCanvas.restore();
-
     }
 
     private void drawLoading() {
-
         mPaint.setShadowLayer(MAX_SHADOW_RADIUS, 0, 0, Color.WHITE);
         mPaint.setStrokeWidth(mPointWidth);
         mCanvas.drawPoint(mLoadingPoint[0], mLoadingPoint[1], mPaint);
-
     }
-
 
     private void startAnimToAlignmentView() {
         cancelAnim();
@@ -402,7 +365,6 @@ public class ShutterView extends View {
         mAnimator.addListener(mToAlignmentListener);
         mAnimator.start();
     }
-
 
     private void drawAlignmentStatus() {
         //画动态坐标
@@ -450,16 +412,12 @@ public class ShutterView extends View {
         mCanvas.restore();
         mPaint.setShadowLayer(0, 0, 0, Color.WHITE);
 
-
         //画固定坐标
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(mCoordinateColor);
         mCanvas.drawPath(mCoordinatePath, mPaint);
 
-
         mCanvas.restore();
-
-
     }
 
     private void makeToCircleShape() {

@@ -68,6 +68,9 @@ public class ShowImageFragment extends Fragment {
         void setup();
     }
 
+    /**
+     * 只展示图片，不可编辑的Layout
+     */
     private class NoEditStickers implements Stickers {
 
         private ImageView mImageView;

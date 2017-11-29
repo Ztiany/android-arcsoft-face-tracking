@@ -14,6 +14,8 @@ import io.face.tracking.sample.R;
 
 
 /**
+ * 考虑使用SurfaceView，绘制性能
+ *
  * @author Ztiany
  *         Email: 1169654504@qq.com
  *         Date : 2017-11-13 15:58
@@ -78,7 +80,6 @@ public class FaceAreaView extends View {
             scaleX = width * 1.0F / faceParentWidth;
             scaleY = height * 1.0F / faceParentHeight;
         }
-
         mMatrix.setScale(scaleX, scaleY);
         canvas.setMatrix(mMatrix);
         mFacePosition.forEachFace(faceAction);

@@ -4,44 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.Log;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 
 class PictureEditorUtils {
-
-    /**
-     * 保存Bitmap图片到指定文件
-     */
-    static void saveBitmap(Bitmap bm, String filePath, Bitmap.CompressFormat format) {
-        File f = new File(filePath);
-        if (f.exists()) {
-            @SuppressWarnings("unused")
-            boolean delete = f.delete();
-        }
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(f);
-            bm.compress(format, 90, out);
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
 
     static void addFaceMask(FacePosition savedFacePosition, Bitmap source, final Bitmap faceMask, Action1<Bitmap> action1) {
         Bitmap bitmap = Bitmap.createBitmap(source.copy(Bitmap.Config.RGB_565, true));
@@ -73,12 +39,7 @@ class PictureEditorUtils {
         Log.d("FaceAreaView", "scaleX:" + scaleX + " scaleY:" + scaleY);
         matrix.setScale(scaleX, scaleY);
         canvas.setMatrix(matrix);
-        savedFacePosition.forEachFace(new Action1<Rect>() {
-            @Override
-            public void accept(Rect rect) {
-                canvas.drawBitmap(faceMask, null, rect, paint);
-            }
-        });
+        savedFacePosition.forEachFace(rect -> canvas.drawBitmap(faceMask, null, rect, paint));
         action1.accept(bitmap);
     }
 }
