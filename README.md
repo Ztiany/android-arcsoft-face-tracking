@@ -9,7 +9,7 @@
  
 ## 3 人脸识别说明
  
- - Face Tracking：[虹软科技](http://www.arcsoft.com.cn/index.html)！
+ - Face Tracking：[虹软科技](http://www.arcsoft.com.cn/index.html)
  - 虹软科技SDK示例与集成
      - [Android人脸识别开发入门--基于虹软免费SDK实现](http://www.jianshu.com/p/75733cff88a3)
      - [sample](https://github.com/asdfqwrasdf/ArcFaceDemo)
