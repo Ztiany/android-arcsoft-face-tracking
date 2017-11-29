@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    buildToolsVersion project.buildToolsVersion
+    compileSdkVersion Integer.parseInt(project.compileSdkVersion)
+
+    defaultConfig {
+        applicationId "io.face.tracking.sample"
+        minSdkVersion Integer.parseInt(project.minSdkVersion)
+        targetSdkVersion Integer.parseInt(project.targetSdkVersion)
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilter "armeabi-v7a"
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':fotoapparat')
+
+    compile "com.android.support:appcompat-v7:${project.appCompatVersion}"
+    compile "com.android.support:percent:${project.appCompatVersion}"
+    compile "com.android.support:exifinterface:${project.appCompatVersion}"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    compile 'com.zxy.android:tiny:0.0.5'
+}

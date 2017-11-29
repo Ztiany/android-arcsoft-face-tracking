@@ -1,0 +1,29 @@
+apply plugin: 'com.android.library'
+
+group = 'io.fotoapparat'
+
+android {
+    buildToolsVersion project.buildToolsVersion
+    compileSdkVersion Integer.parseInt(project.compileSdkVersion)
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(project.minSdkVersion)
+        targetSdkVersion Integer.parseInt(project.targetSdkVersion)
+
+        archivesBaseName = 'library'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    compile "com.android.support:support-annotations:${project.appCompatVersion}"
+}
