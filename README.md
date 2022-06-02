@@ -2,7 +2,7 @@
 
 人脸追踪与手机方向检测示例，该项目目前使用的人脸追踪SDK版本为1.1。
 
-## 2 Libraries
+## 2 用到的第三方库
 
 - [Fotoapparat](https://github.com/Fotoapparat/Fotoapparat)：Making Camera for Android more friendly
 - [Tiny](https://github.com/Sunzxyong/Tiny)
